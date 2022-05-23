@@ -1,15 +1,14 @@
 import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-const FormTextField = ({ control, type, name, label, rules, defaultValue }) => {
+const FormTextField = ({ control, type, name, label, rules }) => {
   return (
     <Controller
-      type={type}
       name={name}
       control={control}
-      defaultValue={defaultValue}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
+          type={type}
           label={label}
           variant="filled"
           value={value}

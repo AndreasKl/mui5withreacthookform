@@ -20,23 +20,71 @@ const StyledForm = styled("form")(({ theme }) => ({
   },
 }));
 
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  email: "@",
+  password: "",
+};
+
 const Form = ({ handleClose }) => {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, setError } = useForm({
+    defaultValues,
+    mode: "onBlur",
+  });
 
   const onSubmit = (data) => {
     console.log(data);
     handleClose();
   };
 
+  const handleServerError = () => {
+    setError("firstName", {
+      type: "manual",
+      message: "an unexpected error occurred",
+    });
+  };
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <TextField control={control} name="firstName" label="First Name" rules={{ required: "First name is required" }} />
-      <TextField control={control} name="lastName" label="Last Name" rules={{ required: "Last name is required" }} />
-      <TextField control={control} name="email" label="E-Mail" rules={{ required: "E-Mail is required" }}  type="email" />
-      <TextField control={control} name="password" label="Password" rules={{ required: "Password is required" }} type="password"/>
+      <TextField
+        control={control}
+        name="firstName"
+        label="First Name"
+        rules={{ required: "First name is required" }}
+      />
+      <TextField
+        control={control}
+        name="lastName"
+        label="Last Name"
+        rules={{ required: "Last name is required" }}
+      />
+      <TextField
+        control={control}
+        name="email"
+        label="E-Mail"
+        rules={({ required: "E-Mail is required" })}
+        type="email"
+      />
+      <TextField
+        control={control}
+        name="password"
+        label="Password"
+        rules={{ required: "Password is required", minLength: { value: 8, message: "Use at least 8 symbols for your password." } }}
+        type="password"
+      />
       <div>
-        <Button variant="contained" onClick={handleClose}>Cancel</Button>
-        <Button type="submit" variant="contained" color="primary">Signup</Button>
+        <Button variant="contained" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button type="submit" variant="contained" color="primary">
+          Signup
+        </Button>
+      </div>
+      <div>
+        <Button variant="contained" onClick={handleServerError}>
+          Server Error
+        </Button>
       </div>
     </StyledForm>
   );
