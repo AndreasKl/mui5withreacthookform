@@ -30,6 +30,7 @@ const defaultValues = {
 const Form = ({ handleClose }) => {
   const { handleSubmit, control, setError } = useForm({
     defaultValues,
+    criteriaMode: "all",
     mode: "onBlur",
   });
 
@@ -41,7 +42,7 @@ const Form = ({ handleClose }) => {
   const handleServerError = () => {
     setError("firstName", {
       type: "manual",
-      message: "an unexpected error occurred",
+      message: "An unexpected server error occurred!",
     });
   };
 
